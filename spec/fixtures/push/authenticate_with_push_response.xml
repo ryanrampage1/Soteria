@@ -1,0 +1,14 @@
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <AuthenticateUserWithPushResponse xmlns="https://schemas.symantec.com/vip/2011/04/vipuserservices">
+      <requestId>send_push_request_20161021152920</requestId>
+      <status>6040</status>
+      <statusMessage>Mobile push request sent</statusMessage>
+      <transactionId>8d70d18461cc9093</transactionId>
+      <pushDetail>
+        <pushCredentialId>VSMT35238564</pushCredentialId>
+        <pushSent>true</pushSent>
+      </pushDetail>
+    </AuthenticateUserWithPushResponse>
+  </S:Body>
+</S:Envelope>

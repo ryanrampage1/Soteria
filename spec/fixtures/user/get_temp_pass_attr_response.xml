@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <GetTemporaryPasswordAttributesResponse xmlns="https://schemas.vip.symantec.com">
+      <requestId>123456</requestId>
+      <status>0000</status>
+      <statusMessage>Success</statusMessage>
+      <tempPwdAttributes>
+        <expirationTime>2011-04-08T08:17:50.000Z</expirationTime>
+        <oneTimeUseOnly>true</oneTimeUseOnly>
+      </tempPwdAttributes>
+    </GetTemporaryPasswordAttributesResponse>
+  </S:Body>
+</S:Envelope>

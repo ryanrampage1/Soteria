@@ -1,0 +1,9 @@
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <CreateUserResponse xmlns="https://schemas.symantec.com/vip/2011/04/vipuserservices">
+      <requestId>test1234</requestId>
+      <status>0000</status>
+      <statusMessage>Success</statusMessage>
+    </CreateUserResponse>
+  </S:Body>
+</S:Envelope>

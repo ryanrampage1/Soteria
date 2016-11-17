@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <CheckOtpResponse xmlns="https://schemas.symantec.com/vip/2011/04/vipuserservices">
+      <requestId>test123</requestId>
+      <status>0000</status>
+      <statusMessage>Success</statusMessage>
+      <credentialId>123456789</credentialId>
+      <credentialType>SMS_OTP</credentialType>
+      <authnId>testauth1234</authnId>
+    </CheckOtpResponse>
+  </S:Body>
+</S:Envelope>

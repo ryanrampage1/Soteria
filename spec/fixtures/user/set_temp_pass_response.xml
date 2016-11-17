@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Body>
+    <SetTemporaryPasswordResponse xmlns="https://schemas.vip.symantec.com">
+      <requestId>1234abcd</requestId>
+      <status>0000</status>
+      <statusMessage>Success</statusMessage>
+      <temporaryPassword>321345</temporaryPassword>
+    </SetTemporaryPasswordResponse>
+  </S:Body>
+</S:Envelope>
