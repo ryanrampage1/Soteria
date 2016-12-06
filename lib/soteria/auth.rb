@@ -3,6 +3,12 @@ module Soteria
 
   class Auth
 
+    # Create a Auth object to make auth calls. 
+    #
+    # @param [String] cert The relative path to the SSL cert on the server.
+    # @param [String] key The relative path to the SSL cert key on the server.
+    # @param [String] pw The password for the cert key file.
+    # @param [Boolean] log if the client should log everything. This is good for development.
     def initialize(cert, key, pw, log)
 
       @client = Savon.client(wsdl: 'lib/wsdl/vip_auth.wsdl',
@@ -50,7 +56,7 @@ module Soteria
                          },
                          attributes: {
                              'Version': '3.1',
-                             'Id': '123'
+                             'Id': Utilities.get_request_id('set_temp_pass')
                          }
       ).body
 
@@ -70,7 +76,7 @@ module Soteria
                          },
                          attributes: {
                              'Version': '3.1',
-                             'Id': '123'
+                             'Id': Utilities.get_request_id('enable_sms_credentail')
                          }
       ).body
 
@@ -91,7 +97,7 @@ module Soteria
                          },
                          attributes: {
                              'Version': '3.1',
-                             'Id': '123'
+                             'Id': Utilities.get_request_id('disable_sms_credentail')
                          }
       ).body
 
@@ -110,7 +116,7 @@ module Soteria
                          },
                          attributes: {
                              'Version': '3.1',
-                             'Id': '123'
+                             'Id': Utilities.get_request_id('activate_token')
                          }
       ).body
 
@@ -129,7 +135,7 @@ module Soteria
                          },
                          attributes: {
                              'Version': '3.1',
-                             'Id': '123'
+                             'Id': Utilities.get_request_id('deactivate_token')
                          }
       ).body
 
@@ -154,11 +160,33 @@ module Soteria
                               },
                               attributes: {
                                   'Version': '3.1',
-                                  'Id': '123'
+                                  'Id': Utilities.get_request_id('register')
                               }
       ).body
 
       get_return_hash(res[:enable_token_response])
+    end
+
+
+    # If a user’s credential is lost or stolen, use the SendTemporaryPassword for SMS API to generate and send a temporary security 
+    # code to the user’s phone number. The system-generated, temporary security code is sent using SMS, and is valid for 
+    # one use only. The temporary security code must be used before the specified expiration time (up to seven days).
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def send_temp_pass(token_id)
+      res = client.call(:send_temporary_password,
+                 message: {
+                     'vip:TokenId': token_id,
+                     'vip:PhoneNumber': token_id
+                 },
+                 attributes: {
+                     'Version': '3.1',
+                     'Id': Utilities.get_request_id('send_temp_pass')
+                 }
+      ).body
+
+      get_return_hash(res[:send_temporary_password_response])
     end
 
 
