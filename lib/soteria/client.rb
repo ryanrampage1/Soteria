@@ -4,6 +4,7 @@ require 'soteria/sms'
 require 'soteria/credential'
 require 'soteria/user'
 require 'soteria/push'
+require 'soteria/auth'
 
 module Soteria
 
@@ -25,13 +26,15 @@ module Soteria
       # @cert_key_password = password
 
       #[:get_server_time, :get_user_info, :get_credential_info, :get_temporary_password_attributes, :poll_push_status]
-      @query_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-query-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @query_client = Utilities.create_client('lib/wsdl/vipuserservices-query-1.7.wsdl', should_log, cert_file, cert_key_file, password)
 
       #[:authenticate_user, :authenticate_user_with_push, :authenticate_credentials, :evaluate_risk, :confirm_risk, :deny_risk, :check_otp]
-      @auth_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-auth-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @auth_client = Utilities.create_client('lib/wsdl/vipuserservices-auth-1.7.wsdl', should_log, cert_file, cert_key_file, password)
 
       #[:create_user, :update_user, :delete_user, :clear_user_pin, :add_credential, :update_credential, :remove_credential, :set_temporary_password, :clear_temporary_password, :set_temporary_password_attributes, :send_otp, :register]
-      @management_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-mgmt-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @management_client = Utilities.create_client('lib/wsdl/vipuserservices-mgmt-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+
+      @auth = Auth.new(cert_file, cert_key_file, password, should_log)
 
       @push = Push.new
       @sms = SMS.new
@@ -320,6 +323,61 @@ module Soteria
       puts @user.update_credential(@management_client, user_id, credential_id, credential_type, name)
     end
 
+
+    # Send a temporary password to the token.
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @param [Int] pass
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def set_temp_pass(token_id, pass)
+      @auth.set_temp_pass(token_id, pass)
+    end
+
+
+    # Use the EnableToken for SMS OTP API to enable a previously disabled SMS OTP credential.
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def enable_sms_credentail(token_id)
+      @auth.enable_sms_credentail(token_id)
+    end
+
+
+    # Use the DisableToken for SMS OTP API to disable an SMS OTP credential.
+    #
+    # @param [String] reason The reason for disabling the token.
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def disable_sms_credentail(reason, token_id)
+      @auth.disable_sms_credentail(reason, token_id)
+    end
+
+
+    # Call when a newly registered SMS OTP credential requires activation
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def activate_token(token_id)
+      @auth.activate_token(token_id)
+    end
+
+
+    # Use the DeactivateToken for SMS OTP API to deactivate an SMS OTP credential. If the deactivation is successful, the credential is deactivated.
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def deactivate_token(token_id)
+      @auth.deactivate_token(token_id)
+    end
+
+
+    # Register a new SMS OTP credential.
+    #
+    # @param [Int] token_id Specifies the phone number that identifies the credential to the VIP Web Services. Do not use spaces or dashes.
+    # @return [Hash] A hash that contains; :success a boolean if the call succeeded, :message a string with any error message, :id the id of the call for debugging purposes
+    def register(token_id)
+      @auth.register(token_id)
+    end
 
   end
 
