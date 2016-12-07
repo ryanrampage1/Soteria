@@ -93,7 +93,6 @@ describe Soteria::User do
       options = {name: 'testCredential', otp: '123456'}
       result_hash = @user.get_add_credential_message('user1', 'credential', 'STANDARD_OTP', options)
 
-      # TODO: this is a hack until we mock the utilities class to set the request id
       result_hash[:'vip:requestId'] = nil
 
       expected_hash = {
