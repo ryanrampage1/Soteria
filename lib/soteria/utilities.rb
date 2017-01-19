@@ -8,8 +8,7 @@ class Utilities
   # @param [String] prefix The prefix for the request ID. This should tell the user what the call is.
   # @return [String] A string that is the request ID for a call. The request ID is just used for debugging purposes.
   def self.get_request_id(prefix)
-    time = Time.new
-    prefix + '_' + time.strftime('%Y%m%d%H%M%S')
+    SecureRandom.uuid.delete('-')
   end
 
 
