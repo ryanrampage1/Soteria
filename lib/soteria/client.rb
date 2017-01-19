@@ -117,7 +117,7 @@ module Soteria
     # @param [String] user_id Id of the user to authenticate. This is the user id that is stored in the Symantec database.
     # @param [String] credential_code The code from the users credential that was entered into the website.
     # @return [Hash] A hash with information on if the authentication was successful.
-    def authenticate_user_cridential(user_id, credential_code)
+    def authenticate_user_credential(user_id, credential_code)
       @credential.authenticate_user_credential(@auth_client, user_id, credential_code)
     end
 
