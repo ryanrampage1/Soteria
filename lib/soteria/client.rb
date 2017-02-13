@@ -26,13 +26,13 @@ module Soteria
       # @cert_key_password = password
 
       #[:get_server_time, :get_user_info, :get_credential_info, :get_temporary_password_attributes, :poll_push_status]
-      @query_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-query-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @query_client = Utilities.create_client('vipuserservices-query-1.7.wsdl', should_log, cert_file, cert_key_file, password)
 
       #[:authenticate_user, :authenticate_user_with_push, :authenticate_credentials, :evaluate_risk, :confirm_risk, :deny_risk, :check_otp]
-      @auth_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-auth-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @auth_client = Utilities.create_client('vipuserservices-auth-1.7.wsdl', should_log, cert_file, cert_key_file, password)
 
       #[:create_user, :update_user, :delete_user, :clear_user_pin, :add_credential, :update_credential, :remove_credential, :set_temporary_password, :clear_temporary_password, :set_temporary_password_attributes, :send_otp, :register]
-      @management_client = Utilities.create_client('http://webdev.cse.msu.edu/~yehanlin/vip/vipuserservices-mgmt-1.7.wsdl', should_log, cert_file, cert_key_file, password)
+      @management_client = Utilities.create_client('vipuserservices-mgmt-1.7.wsdl', should_log, cert_file, cert_key_file, password)
 
       @auth = Auth.new(cert_file, cert_key_file, password, should_log)
 

@@ -22,7 +22,7 @@ class Utilities
   # @param [String] cert_key The absolute path to the certificate key file.
   # @param [String] cert_key_password The password fo the certificate key file.
   def self.create_client(wsdl, should_log, cert_file, cert_key, cert_key_password)
-    Savon.client(wsdl: wsdl,
+    Savon.client(wsdl: File.join(File.join(File.dirname(__FILE__), "../wsdl/"), wsdl),
                  env_namespace: :soapenv,
                  namespace: 'https://schemas.symantec.com/vip/2011/04/vipuserservices',
                  log: should_log,
